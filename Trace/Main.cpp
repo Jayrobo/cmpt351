@@ -6,36 +6,54 @@ using namespace std;
 
 int main()
 {	
+	//-----------------------Test Trace--------------------------//
 	//Trace* test_constructor0 = new Trace();
-	char* fileName = "sample.json";
+	///*
+	char* fileName = "sample.txt";
 	Trace* test_trace = new Trace(fileName);
 	test_trace->trace_start(fileName);
 	test_trace->trace_event_start("test", "test", "test");
+	test_trace->trace_event_start("test2", "test2", "test2");
 	test_trace->trace_end();
+	//*/
 
+	//-----------------------Test Event--------------------------//
+	/*
+	Event* Obj1 = new Event("test", "test", "test");
+	Obj1->setPh("B");
+	Obj1->setPid("test");
+	Obj1->setTid("test");
+	Event* Obj2 = new Event(Obj1);
+	Event* head = Obj1;
 
+	Obj1->setEventNext(Obj2);
+	Event* temp = head;
 
-	/*Event* Obj1 = new Event("test", "test", "test");
-	cout << "{ \"Name\": " << "\"" << Obj1->getName() << "\", ";
-	cout << "\"cat\": " << "\"" << Obj1->getCat() << "\", ";
-
-	if (Obj1->getPh() != NULL)
+	while (temp != NULL)
 	{
-		cout << "\"ph\": " << "\"" << Obj1->getPh() << "\", ";
+		cout << "{ \"Name\": " << "\"" << temp->getName() << "\", ";
+		cout << "\"cat\": " << "\"" << temp->getCat() << "\", ";
+
+		if (temp->getPh() != NULL)
+		{
+			cout << "\"ph\": " << "\"" << temp->getPh() << "\", ";
+		}
+
+		if (temp->getPid() != NULL)
+		{
+			cout << "\"pid\": " << "\"" << temp->getPid() << "\", ";
+		}
+
+		if (temp->getTid() != NULL)
+		{
+			cout << "\"tid\": " << "\"" << temp->getTid() << "\", ";
+		}
+
+		cout << "\"ts\": " << "\"" << temp->getTs().count() * system_clock::period::num / system_clock::period::den / 1000000 << "\"} " << endl;
+
+		temp = temp->getEventNext();
 	}
-
-	if (Obj1->getPid() != NULL)
-	{
-		cout << "\"pid\": " << "\"" << Obj1->getPid() << "\", ";
-	}
-
-	if (Obj1->getTid() != NULL)
-	{
-		cout << "\"tid\": " << "\"" << Obj1->getTid() << "\", ";
-	}
-
-	cout << "\"ts\": " << "\"" << Obj1->getTs().count() * system_clock::period::num / system_clock::period::den / 1000000 << "\"} " << endl;*/
-
+	*/
 	system("pause");
 	return 0;
 }

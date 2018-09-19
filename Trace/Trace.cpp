@@ -53,22 +53,30 @@ void Trace::trace_event_start(char* name, char* categories, char* argument)
 	{
 		Event* Original = head;
 		//---------------------Deep Copy-----------------------//
-		Event* temp = new Event();
-		temp->setEventNext(Original->getEventNext()); //copy the first Event
+		Event* temp = new Event(Original); //copy the first event
 		while (Original != NULL)
 		{
 			Original = Original->getEventNext(); //iterate to the next Event
-			Event* curTemp = new Event(Original); 
-			
-			temp->setEventNext(curTemp);
-			temp = temp->getEventNext();
-		}
 
-		temp->setEventNext(NULL);
+			if (Original == NULL)
+			{
+				temp->setEventNext(Event_Start);
+			}
+			else
+			{
+				Event* curTemp = new Event(Original);
+				temp->setEventNext(curTemp);
+				temp = temp->getEventNext();
+			}
+		}
+		//temp->setEventNext(NULL);
+		head = temp;
 		//----------------------------------------------------//
 
 		//-------Insert Event Start between "B" and "E"-------//
-
+		//Refer to textbook on pg 277 in Figure 9-5
+		//Event* prePtr;
+		//Event* curPtr;
 
 	}
 
