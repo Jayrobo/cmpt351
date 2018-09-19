@@ -15,10 +15,12 @@ class Trace
 
 		Trace(char* filename);
 
-		void trace_start(char* filename);
+		//opens up a file with the filename and beginning the print with [
 		//strictly speaking 
 		//void trace_start(char* filename) has the parameter equal to void trace_start(char* const message) or void trace_start(char message[])
+		void trace_start(char* filename);
 
+		//Write a event with event type (ph) equal to "b", and with all given argument 
 		void trace_event_start(char* name, char* categories, char* argument);
 
 		void trace_event_end(char* argument);

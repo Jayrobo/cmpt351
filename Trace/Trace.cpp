@@ -9,44 +9,26 @@ Trace::Trace()
 	//char filename[] = "testing.json";  -------> could initialize the ptr directly
 	char *ptr = "testing.json";
 	head = NULL;
-	trace_start(ptr);
+	//trace_start(ptr);
 }
 
 Trace::Trace(char* filename)
 {
 	head = NULL;
-	trace_start(filename);
+	//trace_start(filename);
 }
 
 void Trace::trace_start(char* filename) //filename is array pointer
 {
 	new_file.open(filename);
 	new_file << "["<<endl;
-	trace_event_start("test", "test", "test");
-	trace_end();
+	//trace_event_start("test", "test", "test");
+	//trace_end();
 }
 
 void Trace::trace_end()
 {
-	new_file << "{ \"Name\": " << "\"" << head->getName() << "\", ";
-	new_file << "\"cat\": " << "\"" << head->getCat() << "\", ";
-
-	if (head->getPh() != NULL)
-	{
-		new_file << "\"ph\": " << "\"" << head->getPh() << "\", ";
-	}
-
-	if (head->getPid() != NULL)
-	{
-		new_file << "\"pid\": " << "\"" << head->getPid() << "\", ";
-	}
-
-	if (head->getTid() != NULL)
-	{
-		new_file << "\"tid\": " << "\"" << head->getTid() << "\", ";
-	}
-
-	new_file << "\"ts\": " << "\"" << head->getTs().count() * system_clock::period::num / system_clock::period::den / 1000000 << "\"} " << endl;
+	trace_flush();
 	new_file << "]";
 	new_file.close();
 }
@@ -76,8 +58,7 @@ void Trace::trace_event_start(char* name, char* categories, char* argument)
 		while (Original != NULL)
 		{
 			Original = Original->getEventNext(); //iterate to the next Event
-			Event* curTemp = new Event(); 
-			curTemp->setEventNext(Original->getEventNext());
+			Event* curTemp = new Event(Original); 
 			
 			temp->setEventNext(curTemp);
 			temp = temp->getEventNext();
@@ -148,5 +129,30 @@ void Trace::trace_counter(char* name, char* key, char* value)
 
 void Trace::trace_flush()
 {
+	Event* temp = head;
 
+	while (temp != NULL)
+	{
+		new_file << "{ \"Name\": " << "\"" << temp->getName() << "\", ";
+		new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
+
+		if (temp->getPh() != NULL)
+		{
+			new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
+		}
+
+		if (temp->getPid() != NULL)
+		{
+			new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
+		}
+
+		if (temp->getTid() != NULL)
+		{
+			new_file << "\"tid\": " << "\"" << temp->getTid() << "\", ";
+		}
+
+		new_file << "\"ts\": " << "\"" << temp->getTs().count() * system_clock::period::num / system_clock::period::den / 1000000 << "\"} " << endl;
+
+		temp = temp->getEventNext();
+	}
 }
