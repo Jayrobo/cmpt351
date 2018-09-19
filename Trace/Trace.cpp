@@ -132,7 +132,53 @@ void Trace::trace_object_gone(char* name, void* obj_pointer)
 
 void Trace::trace_counter(char* name, char* key, char* value)
 {
+	argument = key;
+	categories = NULL;
+	Event* Event_Start = new Event(name, categories, argument); //temporary event
+	Event_Start->setPh("C");
+	Event_Start->setPid(NULL);
+	Event_Start->setTid(NULL);
+	Event_Start->setKey(value);// args->key->value->NULL
+	Event_Start->setVal(NULL);
 
+	// check chronos
+	system_clock::time_point tp = system_clock::now();
+	system_clock::duration ts = tp.time_since_epoch();
+
+	Event_Start->setTs(ts);
+
+	if (head == NULL) {
+		head = Event_Start;
+	}
+	else
+	{
+		Event* Original = head;
+		//---------------------Deep Copy-----------------------//
+		Event* temp = new Event(Original); //copy the first event
+		while (Original != NULL)
+		{
+			Original = Original->getEventNext(); //iterate to the next Event
+
+			if (Original == NULL)
+			{
+				temp->setEventNext(Event_Start);
+			}
+			else
+			{
+				Event* curTemp = new Event(Original);
+				temp->setEventNext(curTemp);
+				temp = temp->getEventNext();
+			}
+		}
+		//temp->setEventNext(NULL);
+		head = temp;
+		//----------------------------------------------------//
+
+		//-------Insert Event Start between "B" and "E"-------//
+		//Refer to textbook on pg 277 in Figure 9-5
+		//Event* prePtr;
+		//Event* curPtr;
+	}
 }
 
 void Trace::trace_flush()
@@ -142,7 +188,11 @@ void Trace::trace_flush()
 	while (temp != NULL)
 	{
 		new_file << "{ \"Name\": " << "\"" << temp->getName() << "\", ";
-		new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
+		
+		if (temp->getCat() != NULL)
+		{
+			new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
+		}
 
 		if (temp->getPh() != NULL)
 		{
@@ -160,6 +210,11 @@ void Trace::trace_flush()
 		}
 
 		new_file << "\"ts\": " << "\"" << temp->getTs().count() * system_clock::period::num / system_clock::period::den / 1000000 << "\"} " << endl;
+
+		if(temp->getArgs() != NULL)
+		{
+			new_file << "\"args\": " << "\"" << temp->getArgs() << "\", ";
+		}
 
 		temp = temp->getEventNext();
 	}

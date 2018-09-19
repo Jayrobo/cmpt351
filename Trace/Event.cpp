@@ -70,6 +70,16 @@ void Event::setArgs(char* Event_arguments)
 	args = Event_arguments;
 }
 
+void Event::setKey(char* Event_key)
+{
+	key = Event_key;
+}
+
+void Event::setVal(char* Event_value)
+{
+	value = Event_value;
+}
+
 void Event::setPh(char* Event_type)
 {
 	ph = Event_type;
@@ -122,6 +132,14 @@ char* Event::getTid()
 char* Event::getArgs()
 {
 	return args;
+}
+char* Event::getKey()
+{
+	return key;
+}
+char* Event::getVal()
+{
+	return value;
 }
 
 Event* Event::getEventNext()

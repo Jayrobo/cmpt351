@@ -24,6 +24,10 @@ class Event
 
 		void setArgs(char* Event_arguments);
 
+		void setKey(char* Event_key);
+
+		void setVal(char* Event_value);
+
 		void setPh(char* Event_type);
 
 		void setPid(char* Event_Process_ID);
@@ -41,6 +45,8 @@ class Event
 		char* getPid();			//
 		char* getTid();			//
 		char* getArgs();
+		char* getKey();
+		char* getVal();
 
 		Event* getEventNext(); //pointing to the next in the list
 
@@ -54,6 +60,8 @@ class Event
 		char* pid;
 		char* tid;
 		char* args;
+		char* key;
+		char* value;
 
 		Event* next;
 };
