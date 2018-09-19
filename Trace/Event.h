@@ -11,7 +11,9 @@ class Event
 	public:
 		Event();
 
-		Event(char* name, char* categories, char* argument);
+		Event(char* Event_name, char* Event_categories, char* Event_argument);
+
+		Event(char* Event_argument);
 		
 		//Setter and Getter
 		void setName(char* Event_name);

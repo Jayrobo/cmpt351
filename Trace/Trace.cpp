@@ -63,14 +63,66 @@ void Trace::trace_event_start(char* name, char* categories, char* argument)
 
 	Event_Start->setTs(ts);
 
+
 	if (head == NULL) {
 		head = Event_Start;
+	}
+	else
+	{
+		Event* Original = head;
+		//---------------------Deep Copy-----------------------//
+		Event* temp = new Event();
+		temp->setEventNext(Original->getEventNext()); //copy the first Event
+		while (Original != NULL)
+		{
+			Original = Original->getEventNext(); //iterate to the next Event
+			Event* curTemp = new Event(); 
+			curTemp->setEventNext(Original->getEventNext());
+			
+			temp->setEventNext(curTemp);
+			temp = temp->getEventNext();
+		}
+
+		temp->setEventNext(NULL);
+		//----------------------------------------------------//
+
+		//-------Insert Event Start between "B" and "E"-------//
+
+
 	}
 
 }
 
 void Trace::trace_event_end(char* argument)
 {
+	Event* Event_End = new Event(argument); //temporary event
+	//name and categories are not input of the fuction, need to be the same as the beginning
+	Event_End->setPh("E");
+	Event_End->setPid("TEST");
+	Event_End->setTid("TEST");
+
+	system_clock::time_point tp = system_clock::now();
+	system_clock::duration ts = tp.time_since_epoch();
+
+	Event_End->setTs(ts);
+
+	Event* temp = head;
+
+	if (temp == NULL) {
+		head = Event_End;
+	}
+/*	else
+	{
+
+		while (temp != NULL)
+		{
+			if (temp->getEventNext() == NULL)
+			{
+
+			}
+			temp = temp->getEventNext();
+		}
+	}*/
 
 }
 

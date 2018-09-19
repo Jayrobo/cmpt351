@@ -30,6 +30,20 @@ Event::Event(char* Event_name, char* Event_categories, char* Event_argument)
 	next = NULL;
 }
 
+Event::Event(char* Event_argument)
+{
+
+	args = Event_argument;
+
+	//Doesn't require to be changed yet
+	name = NULL;
+	cat = NULL;
+	ph = NULL;
+	pid = NULL;
+	tid = NULL;
+	next = NULL;
+}
+
 void Event::setName(char* Event_name)
 {
 	name = Event_name;
