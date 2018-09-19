@@ -44,6 +44,17 @@ Event::Event(char* Event_argument)
 	next = NULL;
 }
 
+Event::Event(Event* Event_obj)
+{
+	name = Event_obj->getName();
+	cat = Event_obj->getCat();
+	ph = Event_obj->getPh();
+	pid = Event_obj->getPid();
+	tid = Event_obj->getTid();
+	args = Event_obj->getArgs();
+	next = NULL;
+}
+
 void Event::setName(char* Event_name)
 {
 	name = Event_name;

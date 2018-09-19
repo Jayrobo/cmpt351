@@ -14,6 +14,8 @@ class Event
 		Event(char* Event_name, char* Event_categories, char* Event_argument);
 
 		Event(char* Event_argument);
+
+		Event(Event* Event_obj);
 		
 		//Setter and Getter
 		void setName(char* Event_name);
