@@ -1,4 +1,4 @@
 [
-{ "Name": "ctr", "ph": "C", "ts": "0"} 
-"args": "cats", { "Name": "test2", "cat": "test2", "ph": "B", "pid": "TEST", "tid": "TEST", "ts": "1537"} 
+{ "Name": "test", "cat": "test", "ph": "B", "pid": "TEST", "tid": "TEST", "ts": "0"} 
+"args": "test", { "Name": "test2", "cat": "test2", "ph": "B", "pid": "TEST", "tid": "TEST", "ts": "1537"} 
 "args": "test2", ]

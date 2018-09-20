@@ -59,25 +59,45 @@ void Trace::trace_event_start(char* name, char* categories, char* argument)
 		{
 			Original = Original->getEventNext(); //iterate to the next Event
 
-			if (Original == NULL)
-			{
-				temp->setEventNext(Event_Start);
-			}
-			else
+			if (Original != NULL)
 			{
 				Event* curTemp = new Event(Original);
 				temp->setEventNext(curTemp);
 				temp = temp->getEventNext();
 			}
 		}
-		//temp->setEventNext(NULL);
-		head = temp;
+		temp->setEventNext(NULL);
 		//----------------------------------------------------//
 
 		//-------Insert Event Start between "B" and "E"-------//
 		//Refer to textbook on pg 277 in Figure 9-5
-		//Event* prePtr;
-		//Event* curPtr;
+		Event* prePtr;
+		Event* curPtr;
+
+		while (temp != NULL)
+		{
+			prePtr = temp;
+			temp = temp->getEventNext();
+			curPtr = temp;
+
+			if (prePtr->getPh() == "B" && curPtr == NULL)
+			{
+				prePtr->setEventNext(Event_Start);
+				temp = prePtr;
+				break;
+			}
+
+			else if (prePtr->getPh() == "B" && curPtr->getPh() == "E")
+			{
+				prePtr->setEventNext(Event_Start);
+				Event_Start->setEventNext(curPtr);
+				temp = prePtr;
+				break;
+			}
+
+		 }
+
+		head = temp;
 
 	}
 
