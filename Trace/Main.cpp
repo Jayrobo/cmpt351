@@ -13,8 +13,9 @@ int main()
 	Trace* test_trace = new Trace(fileName);
 	test_trace->trace_start(fileName);
 	test_trace->trace_event_start("test", "test", "test");
-	test_trace->trace_counter("ctr", "cats", "10");//check ctr events
-	test_trace->trace_event_start("test2", "test2", "test2");
+	//test_trace->trace_counter("ctr", "cats", "10");//check ctr events
+	test_trace->trace_event_end("test2");
+	//test_trace->trace_event_start("test3", "test3", "test3");
 	test_trace->trace_end();
 	//*/
 
