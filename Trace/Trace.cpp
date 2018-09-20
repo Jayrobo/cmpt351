@@ -29,7 +29,7 @@ void Trace::trace_start(char* filename) //filename is array pointer
 void Trace::trace_end()
 {
 	trace_flush();
-	new_file << "]";
+	new_file << "}]";
 	new_file.close();
 }
 
@@ -132,23 +132,23 @@ void Trace::trace_object_gone(char* name, void* obj_pointer)
 
 void Trace::trace_counter(char* name, char* key, char* value)
 {
-	argument = key;
+	argument = NULL;
 	categories = NULL;
-	Event* Event_Start = new Event(name, categories, argument); //temporary event
-	Event_Start->setPh("C");
-	Event_Start->setPid(NULL);
-	Event_Start->setTid(NULL);
-	Event_Start->setKey(value);// args->key->value->NULL
-	Event_Start->setVal(NULL);
+	Event* Event_Count = new Event(name, categories, argument); //temporary event
+	Event_Count->setPh("C");
+	Event_Count->setPid(NULL);
+	Event_Count->setTid(NULL);
+	Event_Count->setKey(key);
+	Event_Count->setVal(value);
 
 	// check chronos
 	system_clock::time_point tp = system_clock::now();
 	system_clock::duration ts = tp.time_since_epoch();
 
-	Event_Start->setTs(ts);
+	Event_Count->setTs(ts);
 
 	if (head == NULL) {
-		head = Event_Start;
+		head = Event_Count;
 	}
 	else
 	{
@@ -161,7 +161,7 @@ void Trace::trace_counter(char* name, char* key, char* value)
 
 			if (Original == NULL)
 			{
-				temp->setEventNext(Event_Start);
+				temp->setEventNext(Event_Count);
 			}
 			else
 			{
@@ -171,9 +171,8 @@ void Trace::trace_counter(char* name, char* key, char* value)
 			}
 		}
 		//temp->setEventNext(NULL);
-		head = temp;
 		//----------------------------------------------------//
-
+		head = temp;
 		//-------Insert Event Start between "B" and "E"-------//
 		//Refer to textbook on pg 277 in Figure 9-5
 		//Event* prePtr;
@@ -209,13 +208,26 @@ void Trace::trace_flush()
 			new_file << "\"tid\": " << "\"" << temp->getTid() << "\", ";
 		}
 
-		new_file << "\"ts\": " << "\"" << temp->getTs().count() * system_clock::period::num / system_clock::period::den / 1000000 << "\"} " << endl;
+		new_file << "\"ts\": " << "\"" << temp->getTs().count() * system_clock::period::num / system_clock::period::den / 1000000;
 
 		if(temp->getArgs() != NULL)
 		{
-			new_file << "\"args\": " << "\"" << temp->getArgs() << "\", ";
+			new_file << ", \"args\": " << "\"" << temp->getArgs() << "\", ";
+		}
+
+		if (temp->getKey() != NULL)
+		{
+			new_file << ", \"args\": {" << "\"" << temp->getKey() << "\": ";
+		}
+
+		if (temp->getVal() != NULL)
+		{
+			new_file << temp->getVal() << "}";
 		}
 
 		temp = temp->getEventNext();
+		if (temp != NULL) {
+			new_file << "},\n";
+		}
 	}
 }
