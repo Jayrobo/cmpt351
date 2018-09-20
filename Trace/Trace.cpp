@@ -89,6 +89,8 @@ void Trace::trace_event_start(char* name, char* categories, char* argument)
 
 			else if (prePtr->getPh() == "B" && curPtr->getPh() == "E")
 			{
+				Event_Start->setName(prePtr->getName());
+				Event_Start->setCat(prePtr->getCat());
 				prePtr->setEventNext(Event_Start);
 				Event_Start->setEventNext(curPtr);
 				temp = prePtr;
@@ -121,18 +123,53 @@ void Trace::trace_event_end(char* argument)
 	if (temp == NULL) {
 		head = Event_End;
 	}
-/*	else
+	else
 	{
+		Event* Original = head;
+		//---------------------Deep Copy-----------------------//
+		//refer to text book on pg 147 in Figure 4-8
+		Event* temp = new Event(Original); //copy the first event
+		while (Original != NULL)
+		{
+			Original = Original->getEventNext(); //iterate to the next Event
+
+			if (Original != NULL)
+			{
+				Event* curTemp = new Event(Original);
+				temp->setEventNext(curTemp);
+				temp = temp->getEventNext();
+			}
+		}
+		temp->setEventNext(NULL);
+		//----------------------------------------------------//
+
+		//-------Insert Event Start between "B" and "E"-------//
+		//Refer to textbook on pg 277 in Figure 9-5
+		Event* prePtr;
+		Event* curPtr;
 
 		while (temp != NULL)
 		{
-			if (temp->getEventNext() == NULL)
-			{
-
-			}
+			prePtr = temp;
 			temp = temp->getEventNext();
+			curPtr = temp;
+
+			if (prePtr->getPh() == "B" && curPtr == NULL)
+			{
+				prePtr->setEventNext(Event_End);
+				temp = prePtr;
+				break;
+			}
+
+			else if (prePtr->getPh() == "B" && curPtr->getPh() == "E")
+			{
+				prePtr->setEventNext(Event_End);
+				Event_End->setEventNext(curPtr);
+				temp = prePtr;
+				break;
+			}
 		}
-	}*/
+	}
 
 }
 
@@ -234,7 +271,8 @@ void Trace::trace_flush()
 
 		if(temp->getArgs() != NULL)
 		{
-			new_file << "\"args\": " << "\"" << temp->getArgs() << "\", ";
+			new_file << "\"args\": {" << endl;
+			
 		}
 
 		temp = temp->getEventNext();
