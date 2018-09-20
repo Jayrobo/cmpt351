@@ -53,6 +53,7 @@ void Trace::trace_event_start(char* name, char* categories, char* argument)
 	{
 		Event* Original = head;
 		//---------------------Deep Copy-----------------------//
+		//refer to text book on pg 147 in Figure 4-8
 		Event* temp = new Event(Original); //copy the first event
 		while (Original != NULL)
 		{
