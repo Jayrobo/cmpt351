@@ -1,4 +1,10 @@
 [
-{ "Name": "test", "cat": "test", "ph": "B", "pid": "TEST", "tid": "TEST", "ts": "1537"} 
+{ "Name": "test", "cat": "test", "ph": "B", "pid": "TEST", "tid": "TEST", "ts": "0"} 
+"args": {
+{ "Name": "test3", "cat": "test3", "ph": "B", "pid": "TEST", "tid": "TEST", "ts": "0"} 
+"args": {
+{ "Name": "test3", "cat": "test3", "ph": "E", "pid": "TEST", "tid": "TEST", "ts": "1537"} 
+"args": {
+{ "Name": "test", "cat": "test", "ph": "E", "pid": "TEST", "tid": "TEST", "ts": "0"} 
 "args": {
 ]

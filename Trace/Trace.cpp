@@ -55,6 +55,7 @@ void Trace::trace_event_start(char* name, char* categories, char* argument)
 		//---------------------Deep Copy-----------------------//
 		//refer to text book on pg 147 in Figure 4-8
 		Event* temp = new Event(Original); //copy the first event
+		Event* temphead = temp;  //point to the head of the temp
 		while (Original != NULL)
 		{
 			Original = Original->getEventNext(); //iterate to the next Event
@@ -66,7 +67,8 @@ void Trace::trace_event_start(char* name, char* categories, char* argument)
 				temp = temp->getEventNext();
 			}
 		}
-		temp->setEventNext(NULL);
+		temp = temphead; //after copy all the object, point to where the head of temp 
+
 		//----------------------------------------------------//
 
 		//-------Insert Event Start between "B" and "E"-------//
@@ -84,23 +86,30 @@ void Trace::trace_event_start(char* name, char* categories, char* argument)
 			{
 				prePtr->setEventNext(Event_Start);
 				temp = prePtr;
+				temp = temphead;
+				head = temp;
 				break;
 			}
 
 			else if (prePtr->getPh() == "B" && curPtr->getPh() == "E")
 			{
-				Event_Start->setName(prePtr->getName());
-				Event_Start->setCat(prePtr->getCat());
 				prePtr->setEventNext(Event_Start);
 				Event_Start->setEventNext(curPtr);
 				temp = prePtr;
+				temp = temphead;
+				head = temp;
+				break;
+			}
+			else if (curPtr == NULL)
+			{
+				prePtr->setEventNext(Event_Start);
+				temp = prePtr;
+				temp = temphead;
+				head = temp;
 				break;
 			}
 
 		 }
-
-		head = temp;
-
 	}
 
 }
@@ -129,6 +138,7 @@ void Trace::trace_event_end(char* argument)
 		//---------------------Deep Copy-----------------------//
 		//refer to text book on pg 147 in Figure 4-8
 		Event* temp = new Event(Original); //copy the first event
+		Event* temphead = temp;  //point to the head of the temp
 		while (Original != NULL)
 		{
 			Original = Original->getEventNext(); //iterate to the next Event
@@ -140,7 +150,7 @@ void Trace::trace_event_end(char* argument)
 				temp = temp->getEventNext();
 			}
 		}
-		temp->setEventNext(NULL);
+		temp = temphead;
 		//----------------------------------------------------//
 
 		//-------Insert Event Start between "B" and "E"-------//
@@ -156,21 +166,36 @@ void Trace::trace_event_end(char* argument)
 
 			if (prePtr->getPh() == "B" && curPtr == NULL)
 			{
+				Event_End->setName(prePtr->getName());
+				Event_End->setCat(prePtr->getCat());
 				prePtr->setEventNext(Event_End);
 				temp = prePtr;
+				temp = temphead;
+				head = temp;
 				break;
 			}
 
 			else if (prePtr->getPh() == "B" && curPtr->getPh() == "E")
 			{
+				Event_End->setName(prePtr->getName());
+				Event_End->setCat(prePtr->getCat());
 				prePtr->setEventNext(Event_End);
 				Event_End->setEventNext(curPtr);
 				temp = prePtr;
+				temp = temphead;
+				head = temp;
+				break;
+			}
+			else if (curPtr == NULL)
+			{
+				prePtr->setEventNext(Event_End);
+				temp = prePtr;
+				temp = temphead;
+				head = temp;
 				break;
 			}
 		}
 	}
-
 }
 
 void Trace::trace_instant_global(char* name)
