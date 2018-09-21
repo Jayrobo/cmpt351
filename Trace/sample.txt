@@ -7,5 +7,7 @@
 "args": {
 { "Name": "test", "cat": "test", "ph": "E", "pid": "TEST", "tid": "TEST", "ts": "0"} 
 "args": {
-{ "Name": "ctr", "ph": "C", "ts": "1537"} 
-"args": {"cats": 10}]
+{ "Name": "ctr", "ph": "C", "ts": "0"} 
+"args": {"cats": 10}
+{ "Name": "OutOfMemory_Testing", "ph": "i", "pid": "TEST", "tid": "TEST", "s": "g ", "ts": "1537"} 
+]

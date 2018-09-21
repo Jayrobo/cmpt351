@@ -6,10 +6,9 @@ using namespace std::chrono;
 
 Event::Event()
 {
-	name = "Tested";
-	cat = "Tested";
-
 	//Doesn't require to be changed yet
+	name = NULL;
+	cat = NULL;
 	ph = NULL;
 	pid = NULL;
 	tid = NULL;
