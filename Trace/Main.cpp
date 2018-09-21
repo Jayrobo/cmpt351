@@ -21,13 +21,22 @@ int main()
 	test_trace->trace_counter("ctr", "cats", "10");//check ctr events
 	test_trace->trace_end();
 
-	time_point<system_clock> ts = system_clock::now();
-	cout << duration_cast<microseconds>(ts) <<endl;
-	for (int i = 0; i < 10000; i++)
+	/*steady_clock::time_point tstart = steady_clock::now();
+	for (int i = 0; i < 5000; i++)
 	{
-		cout << "";
+		cout << " ";
 	}
-	cout << endl <<  time_point_cast<microseconds>(ts) << endl;
+	steady_clock::time_point tstop = steady_clock::now();
+
+	cout << endl <<  duration_cast<microseconds>(tstop - tstart).count() << endl;
+
+	tstop = steady_clock::now();
+
+	for (int i = 0; i < 5000; i++)
+	{
+		cout << " ";
+	}
+	cout << endl << duration_cast<microseconds>(tstop - tstart).count() << endl;*/
 	//*/
 
 	//-----------------------Test Event--------------------------//

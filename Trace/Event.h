@@ -36,14 +36,14 @@ class Event
 
 		void setTid(char* Event_Thread_ID);
 
-		system_clock::duration setTs(system_clock::duration Event_Timestamp);
+		void setTs(double Event_Timestamp);
 
 		void setEventNext(Event* nextEvent);
 
 		char* getName();
 		char* getCat();
 		char* getPh();
-		system_clock::duration getTs();
+		double getTs();
 		char* getPid();			//
 		char* getTid();			//
 		char* getArgs();
@@ -58,7 +58,7 @@ class Event
 		char* ph;
 		//char* ts;
 		//double* ts;
-		system_clock::duration ts;
+		double ts;
 		char* pid;
 		char* tid;
 		char* args;

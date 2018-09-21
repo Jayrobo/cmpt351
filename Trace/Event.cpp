@@ -72,6 +72,7 @@ Event::Event(Event* Event_obj)
 	ph = Event_obj->getPh();
 	pid = Event_obj->getPid();
 	tid = Event_obj->getTid();
+	ts = Event_obj->getTs();
 	args = Event_obj->getArgs();
 	key = Event_obj->getKey();
 	value = Event_obj->getVal();
@@ -108,9 +109,9 @@ void Event::setPh(char* Event_type)
 	ph = Event_type;
 }
 
-system_clock::duration Event::setTs(system_clock::duration Event_Timestamp)
+void Event::setTs(double Event_Timestamp)
 {
-	return ts = Event_Timestamp;
+	ts = Event_Timestamp;
 }
 
 void Event::setPid(char* Event_Process_ID)
@@ -140,7 +141,7 @@ char* Event::getPh()
 {
 	return ph;
 }
-system_clock::duration Event::getTs()
+double Event::getTs()
 {
 	return ts;
 }

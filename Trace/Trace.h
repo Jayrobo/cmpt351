@@ -37,6 +37,8 @@ class Trace
 
 		void trace_end();
 
+		steady_clock::time_point tstart;
+
 	private:
 
 		ofstream new_file;
