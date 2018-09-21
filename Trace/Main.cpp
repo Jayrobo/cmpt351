@@ -1,8 +1,10 @@
 #include <iostream>
 #include "Trace.h"
 #include "Event.h"
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 int main()
 {	
@@ -18,6 +20,11 @@ int main()
 	test_trace->trace_event_start("test3", "test3", "test3");
 	test_trace->trace_event_end("test2");
 	test_trace->trace_end();
+
+	system_clock::time_point tp = system_clock::now();
+	system_clock::duration ts = tp.time_since_epoch();
+	cout << ts.count()<<endl;
+
 	//*/
 
 	//-----------------------Test Event--------------------------//
