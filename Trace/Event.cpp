@@ -14,6 +14,8 @@ Event::Event()
 	pid = NULL;
 	tid = NULL;
 	args = NULL;
+	key = NULL;
+	value = NULL;
 	next = NULL;
 }
 
@@ -25,6 +27,23 @@ Event::Event(char* Event_name, char* Event_categories, char* Event_argument)
 
 	//Doesn't require to be changed yet
 	ph = NULL;
+	pid = NULL;
+	tid = NULL;
+	next = NULL;
+	key = NULL;
+	value = NULL;
+}
+
+Event::Event(char* Event_name, char* Event_key, char* Event_value, char* ctr)
+{
+	name = Event_name;
+	key = Event_key;
+	value = Event_value;
+	ph = ctr;
+
+	//Doesn't require to be changed yet
+	cat = NULL;
+	args = NULL;
 	pid = NULL;
 	tid = NULL;
 	next = NULL;
@@ -41,6 +60,8 @@ Event::Event(char* Event_argument)
 	ph = NULL;
 	pid = NULL;
 	tid = NULL;
+	key = NULL;
+	value = NULL;
 	next = NULL;
 }
 
@@ -52,6 +73,8 @@ Event::Event(Event* Event_obj)
 	pid = Event_obj->getPid();
 	tid = Event_obj->getTid();
 	args = Event_obj->getArgs();
+	key = Event_obj->getKey();
+	value = Event_obj->getVal();
 	next = NULL;
 }
 
