@@ -7,5 +7,5 @@
 "args": {
 { "Name": "test", "cat": "test", "ph": "E", "pid": "TEST", "tid": "TEST", "ts": "3"} 
 "args": {
-{ "Name": "ctr", "ph": "C", "ts": "9"} 
+{ "Name": "ctr", "ph": "C", "ts": "1537"} 
 "args": {"cats": 10}]

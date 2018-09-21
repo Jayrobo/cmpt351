@@ -19,6 +19,7 @@ int main()
 	test_trace->trace_event_start("test3", "test3", "test3");
 	test_trace->trace_event_end("test2");
 	test_trace->trace_counter("ctr", "cats", "10");//check ctr events
+	test_trace->trace_instant_global("OutOfMemory_Testing");//check instant global event
 	test_trace->trace_end();
 
 	/*steady_clock::time_point tstart = steady_clock::now();

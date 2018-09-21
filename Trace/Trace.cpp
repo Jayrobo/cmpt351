@@ -206,7 +206,88 @@ void Trace::trace_event_end(char* argument)
 
 void Trace::trace_instant_global(char* name)
 {
+		Event* Event_instGlobal = new Event(); //use default constructor
+		Event_instGlobal->setName(name);
+		Event_instGlobal->setPh("i");
+		Event_instGlobal->setPid("TEST");
+		Event_instGlobal->setTid("TEST");
 
+		// check chronos
+		system_clock::time_point tp = system_clock::now();
+		system_clock::duration ts = tp.time_since_epoch();
+
+		Event_instGlobal->setTs(ts);
+
+		if (head == NULL) {
+			head = Event_instGlobal;
+		}
+		else
+		{
+			Event* Original = head;
+			//---------------------Deep Copy-----------------------//
+			//refer to text book on pg 147 in Figure 4-8
+			Event* temp = new Event(Original); //copy the first event
+			Event* temphead = temp;  //point to the head of the temp
+			while (Original != NULL)
+			{
+				Original = Original->getEventNext(); //iterate to the next Event
+
+				if (Original != NULL)
+				{
+					Event* curTemp = new Event(Original);
+					temp->setEventNext(curTemp);
+					temp = temp->getEventNext();
+				}
+			}
+			temp = temphead; //after copy all the object, point to where the head of temp 
+
+							 //----------------------------------------------------//
+							 //-------Insert Event Start between "B" and "E"-------//
+							 //Refer to textbook on pg 277 in Figure 9-5
+			Event* prePtr;
+			Event* curPtr;
+
+			while (temp != NULL)
+			{
+				prePtr = temp;
+				temp = temp->getEventNext();
+				curPtr = temp;
+
+				//edit if there is a specifc spot that the object should be inserted to
+				/*if (prePtr->getPh() == "B" && curPtr == NULL)
+				{
+				Event_instGlobal->setName(prePtr->getName());
+				Event_instGlobal->setKey(prePtr->getKey());
+				Event_instGlobal->setVal(prePtr->getVal());
+				prePtr->setEventNext(Event_Count);
+				temp = prePtr;
+				temp = temphead;
+				head = temp;
+				break;
+				}
+
+				else if (prePtr->getPh() == "B" && curPtr->getPh() == "C")
+				{
+				Event_instGlobal->setName(prePtr->getName());
+				Event_instGlobal->setKey(prePtr->getKey());
+				Event_instGlobal->setVal(prePtr->getVal());
+				prePtr->setEventNext(Event_instGlobal);
+				Event_instGlobal->setEventNext(curPtr);
+				temp = prePtr;
+				temp = temphead;
+				head = temp;
+				break;
+				}*/
+				/*else*/ if (curPtr == NULL)
+				{
+					prePtr->setEventNext(Event_instGlobal);
+					temp = prePtr;
+					temp = temphead;
+					head = temp;
+					break;
+				}
+			}
+		}
 }
 
 void Trace::trace_object_new(char* name, void* obj_pointer)
@@ -268,7 +349,8 @@ void Trace::trace_counter(char* name, char* key, char* value)
 			temp = temp->getEventNext();
 			curPtr = temp;
 
-			if (prePtr->getPh() == "B" && curPtr == NULL)
+			//edit if there is a specifc spot that the object should be inserted to
+			/*if (prePtr->getPh() == "B" && curPtr == NULL)
 			{
 				Event_Count->setName(prePtr->getName());
 				Event_Count->setKey(prePtr->getKey());
@@ -291,8 +373,8 @@ void Trace::trace_counter(char* name, char* key, char* value)
 				temp = temphead;
 				head = temp;
 				break;
-			}
-			else if (curPtr == NULL)
+			}*/
+			/*else*/ if (curPtr == NULL)
 			{
 				prePtr->setEventNext(Event_Count);
 				temp = prePtr;
@@ -332,7 +414,7 @@ void Trace::trace_flush()
 			new_file << "\"tid\": " << "\"" << temp->getTid() << "\", ";
 		}
 
-		new_file << "\"ts\": " << "\"" << temp->getTs()<< "\"} " << endl;
+		new_file << "\"ts\": " << "\"" << temp->getTs().count() * system_clock::period::num / system_clock::period::den / 1000000 << "\"} " << endl;
 
 		if(temp->getArgs() != NULL)
 		{
@@ -347,7 +429,7 @@ void Trace::trace_flush()
 
 		if (temp->getVal() != NULL)
 		{
-			new_file << temp->getVal() << "}";
+			new_file << temp->getVal() << "}"<<endl;
 		}
 
 		temp = temp->getEventNext();
