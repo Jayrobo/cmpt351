@@ -13,6 +13,8 @@ class Event
 
 		Event(char* Event_name, char* Event_categories, char* Event_argument);
 
+		Event(char* Event_name, char* Event_key, char* Event_value, char* ctr); //ctr events
+
 		Event(char* Event_argument);
 
 		Event(Event* Event_obj);
