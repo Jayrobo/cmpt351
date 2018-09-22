@@ -4,7 +4,11 @@
 #include "Trace.h"
 #include "Event.h"
 
-
+struct arguements
+{
+	char* args;
+	char* val;
+};
 
 Trace::Trace()
 {

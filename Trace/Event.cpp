@@ -6,16 +6,18 @@ using namespace std::chrono;
 
 Event::Event()
 {
+	pid = "1234";
+	tid = "1234";
+
 	//Doesn't require to be changed yet
 	name = NULL;
 	cat = NULL;
 	ph = NULL;
-	pid = NULL;
-	tid = NULL;
 	args = NULL;
 	key = NULL;
 	value = NULL;
 	next = NULL;
+	id = NULL;
 }
 
 Event::Event(char* Event_name, char* Event_categories, char* Event_argument)
@@ -31,6 +33,7 @@ Event::Event(char* Event_name, char* Event_categories, char* Event_argument)
 	next = NULL;
 	key = NULL;
 	value = NULL;
+	id = NULL;
 }
 
 Event::Event(char* Event_name, char* Event_key, char* Event_value, char* ctr)
@@ -46,6 +49,7 @@ Event::Event(char* Event_name, char* Event_key, char* Event_value, char* ctr)
 	pid = NULL;
 	tid = NULL;
 	next = NULL;
+	id = NULL;
 }
 
 Event::Event(char* Event_argument)
@@ -62,6 +66,7 @@ Event::Event(char* Event_argument)
 	key = NULL;
 	value = NULL;
 	next = NULL;
+	id = NULL;
 }
 
 Event::Event(Event* Event_obj)
@@ -75,6 +80,7 @@ Event::Event(Event* Event_obj)
 	args = Event_obj->getArgs();
 	key = Event_obj->getKey();
 	value = Event_obj->getVal();
+	id = Event_obj->getId();
 	next = NULL;
 }
 
@@ -123,6 +129,11 @@ void Event::setTid(char* Event_Thread_ID)
 	tid = Event_Thread_ID;
 }
 
+void Event::setId(char* Event_ID)
+{
+	id = Event_ID;
+}
+
 void Event::setEventNext(Event* nextEvent)
 {
 	next = nextEvent;
@@ -163,6 +174,11 @@ char* Event::getKey()
 char* Event::getVal()
 {
 	return value;
+}
+
+char* Event::getId()
+{
+	return id;
 }
 
 Event* Event::getEventNext()

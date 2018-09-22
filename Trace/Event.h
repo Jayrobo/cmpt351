@@ -36,6 +36,10 @@ class Event
 
 		void setTid(char* Event_Thread_ID);
 
+		void setId(char* Event_ID);
+
+
+		//find relevent infomation @https://www.geeksforgeeks.org/chrono-in-c/
 		void setTs(std::chrono::duration<double> Event_Timestamp);
 
 		void setEventNext(Event* nextEvent);
@@ -49,6 +53,7 @@ class Event
 		char* getArgs();
 		char* getKey();
 		char* getVal();
+		char* getId();
 
 		Event* getEventNext(); //pointing to the next in the list
 
@@ -64,6 +69,7 @@ class Event
 		char* args;
 		char* key;
 		char* value;
+		char* id;
 
 		Event* next;
 };

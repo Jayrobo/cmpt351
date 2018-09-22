@@ -1,13 +1,13 @@
 [
-{ "Name": "test", "cat": "test", "ph": "B", "pid": "TEST", "tid": "TEST", "ts": "22.518"} 
+{ "Name": "test", "cat": "test", "ph": "B", "pid": "TEST", "tid": "TEST", "ts": "1.975"} 
 "args": {
-{ "Name": "test3", "cat": "test3", "ph": "B", "pid": "TEST", "tid": "TEST", "ts": "26.469"} 
+{ "Name": "test3", "cat": "test3", "ph": "B", "pid": "TEST", "tid": "TEST", "ts": "5.531"} 
 "args": {
-{ "Name": "test3", "cat": "test3", "ph": "E", "pid": "TEST", "tid": "TEST", "ts": "29.234"} 
+{ "Name": "test3", "cat": "test3", "ph": "E", "pid": "TEST", "tid": "TEST", "ts": "7.901"} 
 "args": {
-{ "Name": "test", "cat": "test", "ph": "E", "pid": "TEST", "tid": "TEST", "ts": "24.493"} 
+{ "Name": "test", "cat": "test", "ph": "E", "pid": "TEST", "tid": "TEST", "ts": "3.95"} 
 "args": {
-{ "Name": "ctr", "ph": "C", "ts": "50.172"} 
+{ "Name": "ctr", "ph": "C", "ts": "13.432"} 
 "args": {"cats": 10}
-{ "Name": "OutOfMemory_Testing", "ph": "i", "pid": "TEST", "tid": "TEST", "ts": "58.469"} 
+{ "Name": "OutOfMemory_Testing", "ph": "i", "pid": "TEST", "tid": "TEST", "ts": "16.197"} 
 ]
