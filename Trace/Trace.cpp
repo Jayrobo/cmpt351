@@ -44,7 +44,7 @@ void Trace::trace_event_start(char* name, char* categories, char* argument)
 	Event_Start->setTid("TEST");
 
 	steady_clock::time_point tstop = steady_clock::now();
-	double ts = duration_cast<microseconds>(tstop - tstart).count();
+	std::chrono::duration<double> ts = tstop - tstart;
 	Event_Start->setTs(ts);
 
 
@@ -130,7 +130,7 @@ void Trace::trace_event_end(char* argument)
 	//Event_End->setTs(ts);
 
 	steady_clock::time_point tstop = steady_clock::now();
-	double ts = duration_cast<microseconds>(tstop - tstart).count();
+	std::chrono::duration<double> ts = tstop - tstart;
 	Event_End->setTs(ts);
 
 	Event* temp = head;
@@ -213,9 +213,8 @@ void Trace::trace_instant_global(char* name)
 		Event_instGlobal->setTid("TEST");
 
 		// check chronos
-		system_clock::time_point tp = system_clock::now();
-		system_clock::duration ts = tp.time_since_epoch();
-
+		steady_clock::time_point tstop = steady_clock::now();
+		std::chrono::duration<double> ts = tstop - tstart;
 		Event_instGlobal->setTs(ts);
 
 		if (head == NULL) {
@@ -311,7 +310,7 @@ void Trace::trace_counter(char* name, char* key, char* value)
 	//Event_Count->setTs(ts);
 
 	steady_clock::time_point tstop = steady_clock::now();
-	double ts = duration_cast<microseconds>(tstop - tstart).count();
+	std::chrono::duration<double> ts = tstop - tstart;
 	Event_Count->setTs(ts);
 
 	if (head == NULL) {
@@ -414,7 +413,7 @@ void Trace::trace_flush()
 			new_file << "\"tid\": " << "\"" << temp->getTid() << "\", ";
 		}
 
-		new_file << "\"ts\": " << "\"" << temp->getTs().count() * system_clock::period::num / system_clock::period::den / 1000000 << "\"} " << endl;
+		new_file << "\"ts\": " << "\"" << temp->getTs().count()*1000000 << "\"} " << endl;
 
 		if(temp->getArgs() != NULL)
 		{

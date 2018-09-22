@@ -108,7 +108,7 @@ void Event::setPh(char* Event_type)
 	ph = Event_type;
 }
 
-void Event::setTs(double Event_Timestamp)
+void Event::setTs(std::chrono::duration<double> Event_Timestamp)
 {
 	ts = Event_Timestamp;
 }
@@ -140,7 +140,7 @@ char* Event::getPh()
 {
 	return ph;
 }
-double Event::getTs()
+std::chrono::duration<double> Event::getTs()
 {
 	return ts;
 }

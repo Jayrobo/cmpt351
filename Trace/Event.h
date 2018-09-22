@@ -36,14 +36,14 @@ class Event
 
 		void setTid(char* Event_Thread_ID);
 
-		void setTs(double Event_Timestamp);
+		void setTs(std::chrono::duration<double> Event_Timestamp);
 
 		void setEventNext(Event* nextEvent);
 
 		char* getName();
 		char* getCat();
 		char* getPh();
-		double getTs();
+		std::chrono::duration<double> getTs();
 		char* getPid();			//
 		char* getTid();			//
 		char* getArgs();
@@ -58,7 +58,7 @@ class Event
 		char* ph;
 		//char* ts;
 		//double* ts;
-		double ts;
+		std::chrono::duration<double> ts;
 		char* pid;
 		char* tid;
 		char* args;
