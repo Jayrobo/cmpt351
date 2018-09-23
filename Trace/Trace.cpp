@@ -295,7 +295,88 @@ void Trace::trace_instant_global(char* name)
 
 void Trace::trace_object_new(char* name, void* obj_pointer)
 {
+	Event* Event_objectNew = new Event(); //use default constructor
+	Event_objectNew->setName(name);
+	Event_objectNew->setObjPtr(obj_pointer);
+	Event_objectNew->setPh("N");
+	Event_objectNew->setPid("TEST");
+	Event_objectNew->setTid("TEST");
 
+	// check chronos
+	steady_clock::time_point tstop = steady_clock::now();
+	std::chrono::duration<double> ts = tstop - tstart;
+	Event_objectNew->setTs(ts);
+
+	if (head == NULL) {
+		head = Event_objectNew;
+	}
+	else
+	{
+		Event* Original = head;
+		//---------------------Deep Copy-----------------------//
+		//refer to text book on pg 147 in Figure 4-8
+		Event* temp = new Event(Original); //copy the first event
+		Event* temphead = temp;  //point to the head of the temp
+		while (Original != NULL)
+		{
+			Original = Original->getEventNext(); //iterate to the next Event
+
+			if (Original != NULL)
+			{
+				Event* curTemp = new Event(Original);
+				temp->setEventNext(curTemp);
+				temp = temp->getEventNext();
+			}
+		}
+		temp = temphead; //after copy all the object, point to where the head of temp 
+
+						 //----------------------------------------------------//
+						 //-------Insert Event Start between "B" and "E"-------//
+						 //Refer to textbook on pg 277 in Figure 9-5
+		Event* prePtr;
+		Event* curPtr;
+
+		while (temp != NULL)
+		{
+			prePtr = temp;
+			temp = temp->getEventNext();
+			curPtr = temp;
+
+			//edit if there is a specifc spot that the object should be inserted to
+			/*if (prePtr->getPh() == "B" && curPtr == NULL)
+			{
+			Event_objectNew->setName(prePtr->getName());
+			Event_objectNew->setKey(prePtr->getKey());
+			Event_objectNew->setVal(prePtr->getVal());
+			prePtr->Event_objectNew(Event_Count);
+			temp = prePtr;
+			temp = temphead;
+			head = temp;
+			break;
+			}
+
+			else if (prePtr->getPh() == "B" && curPtr->getPh() == "C")
+			{
+			Event_objectNew->setName(prePtr->getName());
+			Event_objectNew->setKey(prePtr->getKey());
+			Event_objectNew->setVal(prePtr->getVal());
+			prePtr->setEventNext(Event_objectNew);
+			Event_instGlobal->setEventNext(curPtr);
+			temp = prePtr;
+			temp = temphead;
+			head = temp;
+			break;
+			}*/
+			/*else*/ if (curPtr == NULL)
+			{
+				prePtr->setEventNext(Event_objectNew);
+				temp = prePtr;
+				temp = temphead;
+				head = temp;
+				break;
+			}
+		}
+	}
 }
 
 void Trace::trace_object_gone(char* name, void* obj_pointer)
@@ -405,6 +486,11 @@ void Trace::trace_flush()
 		if (temp->getPh() != NULL)
 		{
 			new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
+		}
+
+		if (temp->getObjPtr() != NULL)
+		{
+			new_file << temp->getObjPtr() << "}" << endl;
 		}
 
 		if (temp->getPid() != NULL)
