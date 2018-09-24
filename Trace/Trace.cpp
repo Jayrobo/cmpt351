@@ -8,7 +8,9 @@ struct arguements
 {
 	char* args;
 	char* val;
-};
+
+	arguements* next;
+}; //relevent resources https://www.cprogramming.com/tutorial/lesson15.html
 
 Trace::Trace()
 {
@@ -256,32 +258,8 @@ void Trace::trace_instant_global(char* name)
 				temp = temp->getEventNext();
 				curPtr = temp;
 
-				//edit if there is a specifc spot that the object should be inserted to
-				/*if (prePtr->getPh() == "B" && curPtr == NULL)
-				{
-				Event_instGlobal->setName(prePtr->getName());
-				Event_instGlobal->setKey(prePtr->getKey());
-				Event_instGlobal->setVal(prePtr->getVal());
-				prePtr->setEventNext(Event_Count);
-				temp = prePtr;
-				temp = temphead;
-				head = temp;
-				break;
-				}
-
-				else if (prePtr->getPh() == "B" && curPtr->getPh() == "C")
-				{
-				Event_instGlobal->setName(prePtr->getName());
-				Event_instGlobal->setKey(prePtr->getKey());
-				Event_instGlobal->setVal(prePtr->getVal());
-				prePtr->setEventNext(Event_instGlobal);
-				Event_instGlobal->setEventNext(curPtr);
-				temp = prePtr;
-				temp = temphead;
-				head = temp;
-				break;
-				}*/
-				/*else*/ if (curPtr == NULL)
+			 //instant global can be inserted anywhere so lets insert at the end
+			 if (curPtr == NULL)
 				{
 					prePtr->setEventNext(Event_instGlobal);
 					temp = prePtr;
@@ -342,32 +320,7 @@ void Trace::trace_object_new(char* name, void* obj_pointer)
 			temp = temp->getEventNext();
 			curPtr = temp;
 
-			//edit if there is a specifc spot that the object should be inserted to
-			/*if (prePtr->getPh() == "B" && curPtr == NULL)
-			{
-			Event_objectNew->setName(prePtr->getName());
-			Event_objectNew->setKey(prePtr->getKey());
-			Event_objectNew->setVal(prePtr->getVal());
-			prePtr->Event_objectNew(Event_Count);
-			temp = prePtr;
-			temp = temphead;
-			head = temp;
-			break;
-			}
-
-			else if (prePtr->getPh() == "B" && curPtr->getPh() == "C")
-			{
-			Event_objectNew->setName(prePtr->getName());
-			Event_objectNew->setKey(prePtr->getKey());
-			Event_objectNew->setVal(prePtr->getVal());
-			prePtr->setEventNext(Event_objectNew);
-			Event_instGlobal->setEventNext(curPtr);
-			temp = prePtr;
-			temp = temphead;
-			head = temp;
-			break;
-			}*/
-			/*else*/ if (curPtr == NULL)
+		 if (curPtr == NULL)
 			{
 				prePtr->setEventNext(Event_objectNew);
 				temp = prePtr;
@@ -386,17 +339,13 @@ void Trace::trace_object_gone(char* name, void* obj_pointer)
 
 void Trace::trace_counter(char* name, char* key, char* value)
 {
-	Event* Event_Count = new Event(name, key, value,"C");
-	
-	// check chronos
-	//system_clock::time_point tp = system_clock::now();
-	//system_clock::duration ts = tp.time_since_epoch();
-
-	//Event_Count->setTs(ts);
-
+	Event* Event_Count = new Event(name, key, value, "C");
 	steady_clock::time_point tstop = steady_clock::now();
 	std::chrono::duration<double> ts = tstop - tstart;
 	Event_Count->setTs(ts);
+	Event_Count->setPid("TEST");
+	Event_Count->setTid("TEST");
+
 
 	if (head == NULL) {
 		head = Event_Count;
@@ -432,33 +381,8 @@ void Trace::trace_counter(char* name, char* key, char* value)
 			prePtr = temp;
 			temp = temp->getEventNext();
 			curPtr = temp;
-
-			//edit if there is a specifc spot that the object should be inserted to
-			/*if (prePtr->getPh() == "B" && curPtr == NULL)
-			{
-				Event_Count->setName(prePtr->getName());
-				Event_Count->setKey(prePtr->getKey());
-				Event_Count->setVal(prePtr->getVal());
-				prePtr->setEventNext(Event_Count);
-				temp = prePtr;
-				temp = temphead;
-				head = temp;
-				break;
-			}
-
-			else if (prePtr->getPh() == "B" && curPtr->getPh() == "C")
-			{
-				Event_Count->setName(prePtr->getName());
-				Event_Count->setKey(prePtr->getKey());
-				Event_Count->setVal(prePtr->getVal());
-				prePtr->setEventNext(Event_Count);
-				Event_Count->setEventNext(curPtr);
-				temp = prePtr;
-				temp = temphead;
-				head = temp;
-				break;
-			}*/
-			/*else*/ if (curPtr == NULL)
+	
+			if (curPtr == NULL)
 			{
 				prePtr->setEventNext(Event_Count);
 				temp = prePtr;
@@ -476,35 +400,84 @@ void Trace::trace_flush()
 
 	while (temp != NULL)
 	{
-		new_file << "{ \"Name\": " << "\"" << temp->getName() << "\", ";
-		
-		if (temp->getCat() != NULL)
-		{
-			new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
-		}
+		//-------------Base on Current Finding----------------//
+			if (temp->getPh() == "B")
+			{
+				new_file << "{ \"Name\": " << "\"" << temp->getName() << "\", ";
+				new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
+				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000;
+				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
+				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", " << endl;
 
-		if (temp->getPh() != NULL)
-		{
-			new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
-		}
+				//missing args
+			}
+			else if (temp->getPh() == "E")
+			{
+				//don't need to print name and category
+				new_file << "{ \"ph\": " << "\"" << temp->getPh() << "\", ";
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000;
+				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
+				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", "<<endl;
 
-		if (temp->getObjPtr() != NULL)
-		{
-			new_file << temp->getObjPtr() << "}" << endl;
-		}
+				//missig args
+			}
+			else if (temp->getPh() == "i")
+			{
+				new_file << "{ \"Name\": " << "\"" << temp->getName() << "\", ";
+				//cat is not necessary because the trace funtion does not include it
+				//new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
+				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000;
+				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
+				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", ";
 
-		if (temp->getPid() != NULL)
-		{
-			new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
-		}
+				if (temp->getEventNext() == NULL)
+				{
+					new_file << "\"s\" : " << "\"g\" }"<<endl; //for instant global event
+														//last event don't need colma
+				}
+				else
+				{
+					new_file << "\"s\" : " << "\"g\" },"<<endl; //for instant global event
+				}
+				//no need arguments
+			}
+			else if (temp->getPh() == "N" || temp->getPh() == "D")
+			{
+				new_file << "{ \"Name\": " << "\"" << temp->getName() << "\", ";
+				//not necessary to print a category
+				//new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
+				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
+				///////////////////////DOUBLE CHECK ID/////////////////////////////
+				new_file << "\"id\": " << "\"" << temp->getId()<< "\", ";
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000;
+				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
 
-		if (temp->getTid() != NULL)
-		{
-			new_file << "\"tid\": " << "\"" << temp->getTid() << "\", ";
-		}
+				//don't need argument
+				if (temp->getEventNext() == NULL)
+				{
+					new_file << "\"tid\": " << "\"" << temp->getTid() << "\"} "<<endl; //last event don't need colma
+				}
+				else
+				{
+					new_file << "\"tid\": " << "\"" << temp->getTid() << "\"}, "<<endl;
+				}
+			}
+			else //else if ph is C
+			{
+				new_file << "{ \"Name\": " << "\"" << temp->getName() << "\", ";
+				//not necessary to print a category
+				//new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
+				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000;
+				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
+				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", " <<endl;
+				//missing args
+			}
+	
 
-		new_file << "\"ts\": " << "\"" << temp->getTs().count()*1000000 << "\"} " << endl;
-
+/*will need to work on these data type
 		if(temp->getArgs() != NULL)
 		{
 			new_file << "\"args\": {" << endl;
@@ -515,12 +488,7 @@ void Trace::trace_flush()
 		{
 			new_file << "\"args\": {" << "\"" << temp->getKey() << "\": ";
 		}
-
-		if (temp->getVal() != NULL)
-		{
-			new_file << temp->getVal() << "}"<<endl;
-		}
-
+*/
 		temp = temp->getEventNext();
 	}
 }

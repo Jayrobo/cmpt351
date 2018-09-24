@@ -20,10 +20,12 @@ int main()
 	test_trace->trace_event_end("test2");
 	test_trace->trace_counter("ctr", "cats", "10");//check ctr events
 	test_trace->trace_instant_global("OutOfMemory_Testing");//check instant global event
+	test_trace->trace_end();
 	
 	//void ptr-www.learncpp.com/cpp-tutorial/613-void-pointers/
 	//test code
-	struct test
+
+	/*struct test
 	{
 		int testVar;
 	};
@@ -31,10 +33,14 @@ int main()
 	void* ptr;
 	ptr = &testptr;
 	
+
 	test_trace->trace_object_new("new", ptr); //N
 	test_trace->trace_object_gone("gone",ptr );//D
 	
-	test_trace->trace_end();
+	test_trace->trace_end(); 
+	*/
+
+
 
 	/*steady_clock::time_point tstart = steady_clock::now();
 	for (int i = 0; i < 5000; i++)

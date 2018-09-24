@@ -1,14 +1,8 @@
 [
-{ "Name": "test", "cat": "test", "ph": "B", "pid": "TEST", "tid": "TEST", "ts": "166027"} 
-"args": {
-{ "Name": "test3", "cat": "test3", "ph": "B", "pid": "TEST", "tid": "TEST", "ts": "1.20484e+06"} 
-"args": {
-{ "Name": "test3", "cat": "test3", "ph": "E", "pid": "TEST", "tid": "TEST", "ts": "1.66885e+06"} 
-"args": {
-{ "Name": "test", "cat": "test", "ph": "E", "pid": "TEST", "tid": "TEST", "ts": "428657"} 
-"args": {
-{ "Name": "ctr", "ph": "C", "ts": "2.14098e+06"} 
-"args": {"cats": 10}
-{ "Name": "OutOfMemory_Testing", "ph": "i", "pid": "TEST", "tid": "TEST", "ts": "2.55848e+06"} 
-{ "Name": "new", "ph": "N", "pid": "TEST", "tid": "TEST", "ts": "4.61184e+06"} 
+{ "Name": "test", "cat": "test", "ph": "B", "ts": 3.951"pid": "TEST", "tid": "TEST", 
+{ "Name": "test3", "cat": "test3", "ph": "B", "ts": 9.482"pid": "TEST", "tid": "TEST", 
+{ "ph": "E", "ts": 13.827"pid": "TEST", "tid": "TEST", 
+{ "ph": "E", "ts": 6.321"pid": "TEST", "tid": "TEST", 
+{ "Name": "ctr", "ph": "C", "ts": 31.21"pid": "TEST", "tid": "TEST", 
+{ "Name": "OutOfMemory_Testing", "ph": "i", "ts": 36.741"pid": "TEST", "tid": "TEST", "s" : "g" }
 ]
