@@ -4,6 +4,8 @@
 
 using namespace std::chrono;
 
+
+
 Event::Event()
 {
 	pid = "1234";
@@ -13,9 +15,13 @@ Event::Event()
 	name = NULL;
 	cat = NULL;
 	ph = NULL;
-	args = NULL;
-	key = NULL;
-	value = NULL;
+	arguements* temp = new arguements;
+	temp->args = NULL;
+	temp->val = NULL;
+	temp->next = NULL;
+	setArgsNext(temp);
+	//key = NULL;
+	objPtr = NULL;
 	next = NULL;
 	id = NULL;
 }
@@ -24,38 +30,56 @@ Event::Event(char* Event_name, char* Event_categories, char* Event_argument)
 {
 	name = Event_name;
 	cat = Event_categories;
-	args = Event_argument;
+	//args = Event_argument;
+
+	arguements* temp = new arguements;
+	temp->args = Event_argument;
+	temp->val = "Sample"; //if no value assigned just have value as a sample
+	temp->next = NULL;
+	setArgsNext(temp);
 
 	//Doesn't require to be changed yet
 	ph = NULL;
 	pid = NULL;
 	tid = NULL;
 	next = NULL;
-	key = NULL;
-	value = NULL;
+	//key = NULL;
+	//value = NULL;
+	objPtr = NULL;
 	id = NULL;
 }
 
 Event::Event(char* Event_name, char* Event_key, char* Event_value, char* ctr)
 {
 	name = Event_name;
-	key = Event_key;
-	value = Event_value;
+	//key = Event_key;
+	//value = Event_value;
+	arguements* temp = new arguements;
+	temp->args = Event_key;
+	temp->val = Event_value; //if no value assigned just have value as a sample
+	temp->next = NULL;
+	setArgsNext(temp);
 	ph = ctr;
 
 	//Doesn't require to be changed yet
 	cat = NULL;
-	args = NULL;
+	//args = NULL;
 	pid = NULL;
 	tid = NULL;
 	next = NULL;
 	id = NULL;
+	objPtr = NULL;
 }
 
 Event::Event(char* Event_argument)
 {
 
-	args = Event_argument;
+	//args = Event_argument;
+	arguements* temp = new arguements;
+	temp->args = Event_argument;
+	temp->val = "Sample"; //if no value assigned just have value as a sample
+	temp->next = NULL;
+	setArgsNext(temp);
 
 	//Doesn't require to be changed yet
 	name = NULL;
@@ -63,8 +87,9 @@ Event::Event(char* Event_argument)
 	ph = NULL;
 	pid = NULL;
 	tid = NULL;
-	key = NULL;
-	value = NULL;
+	//key = NULL;
+	//value = NULL;
+	objPtr = NULL;
 	next = NULL;
 	id = NULL;
 }
@@ -77,9 +102,13 @@ Event::Event(Event* Event_obj)
 	pid = Event_obj->getPid();
 	tid = Event_obj->getTid();
 	ts = Event_obj->getTs();
-	args = Event_obj->getArgs();
-	key = Event_obj->getKey();
-	value = Event_obj->getVal();
+	if (argu != NULL)
+	{
+		argu->args = Event_obj->getArgs();
+		argu->val = Event_obj->getVal();
+		argu->next = Event_obj->getArguNext();
+	}
+	objPtr = Event_obj->getObjPtr();
 	id = Event_obj->getId();
 	next = NULL;
 }
@@ -94,19 +123,39 @@ void Event::setCat(char* Event_categories)
 	cat = Event_categories;
 }
 
+//------------------Structure--------------------------//
 void Event::setArgs(char* Event_arguments)
 {
-	args = Event_arguments;
+	argu->args = Event_arguments;
 }
 
 void Event::setKey(char* Event_key)
 {
-	key = Event_key;
+	argu->args = Event_key;
 }
 
 void Event::setVal(char* Event_value)
 {
-	value = Event_value;
+	argu->val = Event_value;
+}
+
+void Event::setArgsNext(arguements* Event_Argument)
+{
+
+	arguements* temp = argu;
+
+	if (temp == NULL)
+	{
+		temp = Event_Argument;
+	}
+
+	argu = temp;
+
+}
+//------------------------------------------------------//
+
+void Event::setObjPtr(void* Event_objPtr) {
+
 }
 
 void Event::setPh(char* Event_type)
@@ -165,15 +214,23 @@ char* Event::getTid()
 }
 char* Event::getArgs()
 {
-	return args;
+	return argu->args;
 }
 char* Event::getKey()
 {
-	return key;
+	return argu->args;
 }
 char* Event::getVal()
 {
-	return value;
+	return argu->val;
+}
+arguements* Event::getArguNext()
+{
+	return argu->next;
+}
+void* Event::getObjPtr() 
+{
+	return objPtr;
 }
 
 char* Event::getId()

@@ -4,14 +4,6 @@
 #include "Trace.h"
 #include "Event.h"
 
-struct arguements
-{
-	char* args;
-	char* val;
-
-	arguements* next;
-}; //relevent resources https://www.cprogramming.com/tutorial/lesson15.html
-
 Trace::Trace()
 {
 	//char filename[] = "testing.json";  -------> could initialize the ptr directly
