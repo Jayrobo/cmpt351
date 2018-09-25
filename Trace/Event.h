@@ -6,6 +6,13 @@
 #include <chrono>
 using namespace std::chrono;
 
+struct arguements
+{
+	char* args;
+	char* val;
+
+	arguements* next;
+}; //relevent resources https://www.cprogramming.com/tutorial/lesson15.html
 
 class Event 
 {
@@ -25,12 +32,6 @@ class Event
 
 		void setCat(char* Event_categories);
 
-		void setArgs(char* Event_arguments);
-
-		void setKey(char* Event_key);
-
-		void setVal(char* Event_value);
-
 		void setObjPtr(void* Event_objPt);
 
 		void setPh(char* Event_type);
@@ -41,6 +42,17 @@ class Event
 
 		void setId(char* Event_ID);
 
+		//--------------Structure-------------------//
+
+		void setArgs(char* Event_arguments);
+
+		void setKey(char* Event_key);
+
+		void setVal(char* Event_value);
+
+		void setArgsNext(arguements* Event_Argument);
+
+		//------------------------------------------//
 
 		//find relevent infomation @https://www.geeksforgeeks.org/chrono-in-c/
 		void setTs(std::chrono::duration<double> Event_Timestamp);
@@ -56,6 +68,7 @@ class Event
 		char* getArgs();
 		char* getKey();
 		char* getVal();
+		arguements* getArguNext();
 		void* getObjPtr();
 		char* getId();
 
@@ -70,9 +83,11 @@ class Event
 		std::chrono::duration<double> ts;
 		char* pid;
 		char* tid;
-		char* args;
-		char* key;
-		char* value;
+		//char* args;
+		arguements* argu;
+		//char* key;	//key will be the args in structure
+		//char* value;	//value will be the val in structure
+		
 		void* objPtr;
 		char* id;
 
