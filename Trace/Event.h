@@ -31,8 +31,6 @@ class Event
 
 		void setVal(char* Event_value);
 
-		void setObjPtr(void* Event_objPt);
-
 		void setPh(char* Event_type);
 
 		void setPid(char* Event_Process_ID);
@@ -56,7 +54,6 @@ class Event
 		char* getArgs();
 		char* getKey();
 		char* getVal();
-		void* getObjPtr();
 		char* getId();
 
 		Event* getEventNext(); //pointing to the next in the list
@@ -73,7 +70,6 @@ class Event
 		char* args;
 		char* key;
 		char* value;
-		void* objPtr;
 		char* id;
 
 		Event* next;

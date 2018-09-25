@@ -16,7 +16,6 @@ Event::Event()
 	args = NULL;
 	key = NULL;
 	value = NULL;
-	objPtr = NULL;
 	next = NULL;
 	id = NULL;
 }
@@ -34,7 +33,6 @@ Event::Event(char* Event_name, char* Event_categories, char* Event_argument)
 	next = NULL;
 	key = NULL;
 	value = NULL;
-	objPtr = NULL;
 	id = NULL;
 }
 
@@ -52,7 +50,6 @@ Event::Event(char* Event_name, char* Event_key, char* Event_value, char* ctr)
 	tid = NULL;
 	next = NULL;
 	id = NULL;
-	objPtr = NULL;
 }
 
 Event::Event(char* Event_argument)
@@ -68,7 +65,6 @@ Event::Event(char* Event_argument)
 	tid = NULL;
 	key = NULL;
 	value = NULL;
-	objPtr = NULL;
 	next = NULL;
 	id = NULL;
 }
@@ -84,7 +80,6 @@ Event::Event(Event* Event_obj)
 	args = Event_obj->getArgs();
 	key = Event_obj->getKey();
 	value = Event_obj->getVal();
-	objPtr = Event_obj->getObjPtr();
 	id = Event_obj->getId();
 	next = NULL;
 }
@@ -112,10 +107,6 @@ void Event::setKey(char* Event_key)
 void Event::setVal(char* Event_value)
 {
 	value = Event_value;
-}
-
-void Event::setObjPtr(void* Event_objPtr) {
-
 }
 
 void Event::setPh(char* Event_type)
@@ -183,11 +174,6 @@ char* Event::getKey()
 char* Event::getVal()
 {
 	return value;
-}
-
-void* Event::getObjPtr() 
-{
-	return objPtr;
 }
 
 char* Event::getId()

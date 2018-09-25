@@ -275,7 +275,7 @@ void Trace::trace_object_new(char* name, void* obj_pointer)
 {
 	Event* Event_objectNew = new Event(); //use default constructor
 	Event_objectNew->setName(name);
-	Event_objectNew->setObjPtr(obj_pointer);
+	Event_objectNew->setId(static_cast<char*>(obj_pointer));
 	Event_objectNew->setPh("N");
 	Event_objectNew->setPid("TEST");
 	Event_objectNew->setTid("TEST");
