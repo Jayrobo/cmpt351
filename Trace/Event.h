@@ -67,6 +67,7 @@ class Event
 		char* getKey();
 		char* getVal();
 		arguements* getArguNext();
+		arguements* getArgsCur();
 		void* getObjPtr();
 
 		Event* getEventNext(); //pointing to the next in the list

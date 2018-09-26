@@ -143,6 +143,7 @@ void Event::setArgsNext(arguements* Event_Argument)
 	if (temp == NULL)
 	{
 		temp = Event_Argument;
+		argu = temp;
 	}
 	else
 	{
@@ -236,6 +237,10 @@ char* Event::getVal()
 arguements* Event::getArguNext()
 {
 	return argu->next;
+}
+arguements* Event::getArgsCur()
+{
+	return argu;
 }
 void* Event::getObjPtr() 
 {

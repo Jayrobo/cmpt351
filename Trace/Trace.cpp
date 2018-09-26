@@ -459,6 +459,20 @@ void Trace::trace_flush()
 				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", " << endl;
 
 				//missing args
+				if (temp->getArgsCur() != NULL)
+				{
+					arguements* tempArg = temp->getArgsCur();
+					new_file << "\"args\": " << "{";
+
+					while (tempArg->next != NULL)
+					{
+						new_file << "\""<< tempArg->args << "\": ";
+						new_file << "\""<< tempArg->val << "\", ";
+						tempArg = tempArg->next;
+					}
+
+					new_file << "}";
+				}
 			}
 			else if (temp->getPh() == "E")
 			{
