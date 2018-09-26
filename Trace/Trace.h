@@ -29,7 +29,7 @@ class Trace
 
 		void trace_object_new(char* name, void* obj_pointer);
 
-		void trace_object_gone(char* name, void* obj_pointer);
+		//void trace_object_gone(char* name, void* obj_pointer);
 
 		void trace_counter(char* name, char* key, char* value);
 
