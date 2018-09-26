@@ -138,11 +138,28 @@ void Event::setArgsNext(arguements* Event_Argument)
 {
 
 	arguements* temp = argu;
+	arguements* temphead = temp;
 
 	if (temp == NULL)
 	{
 		temp = Event_Argument;
 	}
+	/*else
+	{
+
+		while (temp != NULL)
+		{
+			Original = Original->getEventNext(); //iterate to the next Event
+			if (Original != NULL)
+			{
+				Event* curTemp = new Event(Original);
+				temp->setEventNext(curTemp);
+				temp = temp->getEventNext();
+			}
+		}
+		temp = temphead; //after copy all the object, point to where the head of temp 
+
+	}*/
 
 	argu = temp;
 
