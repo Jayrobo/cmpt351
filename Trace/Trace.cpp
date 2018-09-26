@@ -437,7 +437,7 @@ void Trace::trace_flush()
 				//new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
 				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
 				///////////////////////DOUBLE CHECK ID/////////////////////////////
-				new_file << "\"id\": " << "\"" << temp->getObjPtr()<< "\", ";
+				new_file << "\"id\": " << "\"" <<"0x"<< temp->getObjPtr()<< "\", ";
 				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << "\", ";
 				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
 
