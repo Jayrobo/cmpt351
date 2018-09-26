@@ -1,1 +1,10 @@
 [
+{ "Name": "test", "cat": "test", "ph": "B", "ts": 10.666", "pid": "TEST", "tid": "TEST", "args": {},
+{ "Name": "test3", "cat": "test3", "ph": "B", "ts": 15.012", "pid": "TEST", "tid": "TEST", "args": {},
+{ "ph": "E", "ts": 17.777", "pid": "TEST", "tid": "TEST", 
+{ "ph": "E", "ts": 12.642", "pid": "TEST", "tid": "TEST", 
+{ "Name": "ctr", "ph": "C", "ts": 21.333", "pid": "TEST", 
+{ "Name": "OutOfMemory_Testing", "ph": "i", "ts": 27.259", "pid": "TEST", "tid": "TEST", "s" : "g" },
+{ "Name": "new", "ph": "N", "id": "0x006FF9C4", "ts": 30.814", "pid": "TEST", "tid": "TEST"}, 
+{ "Name": "gone", "ph": "D", "id": "0x006FF9C4", "ts": 35.16", "pid": "TEST", "tid": "TEST"} 
+]

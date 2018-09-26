@@ -456,7 +456,7 @@ void Trace::trace_flush()
 				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
 				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << "\", ";
 				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
-				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", " << endl;
+				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", ";
 
 				//missing args
 				if (temp->getArgsCur() != NULL)
@@ -471,7 +471,7 @@ void Trace::trace_flush()
 						tempArg = tempArg->next;
 					}
 
-					new_file << "}";
+					new_file << "}," << endl;
 				}
 			}
 			else if (temp->getPh() == "E")

@@ -98,12 +98,7 @@ Event::Event(Event* Event_obj)
 	pid = Event_obj->getPid();
 	tid = Event_obj->getTid();
 	ts = Event_obj->getTs();
-	if (argu != NULL)
-	{
-		argu->args = Event_obj->getArgs();
-		argu->val = Event_obj->getVal();
-		argu->next = Event_obj->getArguNext();
-	}
+	argu = Event_obj->getArgsCur();
 	objPtr = Event_obj->getObjPtr();
 	next = NULL;
 }
