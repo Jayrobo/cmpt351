@@ -32,7 +32,7 @@ int main()
 	ptr = &testptr;
 
 	test_trace->trace_object_new("new", ptr); //N
-	//test_trace->trace_object_gone("gone",ptr );//D
+	test_trace->trace_object_gone("gone",ptr );//D
 	
 	test_trace->trace_end();
 
