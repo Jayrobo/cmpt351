@@ -26,7 +26,7 @@ int main()
 
 	//void ptr-www.learncpp.com/cpp-tutorial/613-void-pointers/
 	//test code
-	/*struct test
+	struct test
 	{
 		int testVar;
 	};
@@ -34,9 +34,9 @@ int main()
 	void* ptr;
 	ptr = &testptr;
 
-	cout << ptr <<endl;*/
+	cout << ptr <<endl;
 	
-	/*
+	
 	test_trace->trace_object_new("new", ptr); //N
 	//test_trace->trace_object_gone("gone",ptr );//D
 	
