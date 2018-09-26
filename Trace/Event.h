@@ -40,8 +40,6 @@ class Event
 
 		void setTid(char* Event_Thread_ID);
 
-		void setId(char* Event_ID);
-
 		//--------------Structure-------------------//
 
 		void setArgs(char* Event_arguments);
@@ -70,7 +68,6 @@ class Event
 		char* getVal();
 		arguements* getArguNext();
 		void* getObjPtr();
-		char* getId();
 
 		Event* getEventNext(); //pointing to the next in the list
 
@@ -89,7 +86,6 @@ class Event
 		//char* value;	//value will be the val in structure
 		
 		void* objPtr;
-		char* id;
 
 		Event* next;
 };

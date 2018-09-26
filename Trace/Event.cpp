@@ -23,7 +23,6 @@ Event::Event()
 	//key = NULL;
 	objPtr = NULL;
 	next = NULL;
-	id = NULL;
 }
 
 Event::Event(char* Event_name, char* Event_categories, char* Event_argument)
@@ -46,7 +45,6 @@ Event::Event(char* Event_name, char* Event_categories, char* Event_argument)
 	//key = NULL;
 	//value = NULL;
 	objPtr = NULL;
-	id = NULL;
 }
 
 Event::Event(char* Event_name, char* Event_key, char* Event_value, char* ctr)
@@ -67,7 +65,6 @@ Event::Event(char* Event_name, char* Event_key, char* Event_value, char* ctr)
 	pid = NULL;
 	tid = NULL;
 	next = NULL;
-	id = NULL;
 	objPtr = NULL;
 }
 
@@ -91,7 +88,6 @@ Event::Event(char* Event_argument)
 	//value = NULL;
 	objPtr = NULL;
 	next = NULL;
-	id = NULL;
 }
 
 Event::Event(Event* Event_obj)
@@ -109,7 +105,6 @@ Event::Event(Event* Event_obj)
 		argu->next = Event_obj->getArguNext();
 	}
 	objPtr = Event_obj->getObjPtr();
-	id = Event_obj->getId();
 	next = NULL;
 }
 
@@ -172,7 +167,7 @@ void Event::setArgsNext(arguements* Event_Argument)
 //------------------------------------------------------//
 
 void Event::setObjPtr(void* Event_objPtr) {
-
+	objPtr = Event_objPtr;
 }
 
 void Event::setPh(char* Event_type)
@@ -193,11 +188,6 @@ void Event::setPid(char* Event_Process_ID)
 void Event::setTid(char* Event_Thread_ID)
 {
 	tid = Event_Thread_ID;
-}
-
-void Event::setId(char* Event_ID)
-{
-	id = Event_ID;
 }
 
 void Event::setEventNext(Event* nextEvent)
@@ -248,11 +238,6 @@ arguements* Event::getArguNext()
 void* Event::getObjPtr() 
 {
 	return objPtr;
-}
-
-char* Event::getId()
-{
-	return id;
 }
 
 Event* Event::getEventNext()

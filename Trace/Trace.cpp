@@ -312,7 +312,7 @@ void Trace::trace_object_new(char* name, void* obj_pointer)
 			temp = temp->getEventNext();
 			curPtr = temp;
 
-		 if (curPtr == NULL)
+			if (curPtr == NULL)
 			{
 				prePtr->setEventNext(Event_objectNew);
 				temp = prePtr;
@@ -322,11 +322,6 @@ void Trace::trace_object_new(char* name, void* obj_pointer)
 			}
 		}
 	}
-}
-
-void Trace::trace_object_gone(char* name, void* obj_pointer)
-{
-
 }
 
 void Trace::trace_counter(char* name, char* key, char* value)
@@ -398,7 +393,7 @@ void Trace::trace_flush()
 				new_file << "{ \"Name\": " << "\"" << temp->getName() << "\", ";
 				new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
 				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
-				new_file << "\"ts\": " << temp->getTs().count() * 1000000;
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << "\", ";
 				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
 				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", " << endl;
 
@@ -408,7 +403,7 @@ void Trace::trace_flush()
 			{
 				//don't need to print name and category
 				new_file << "{ \"ph\": " << "\"" << temp->getPh() << "\", ";
-				new_file << "\"ts\": " << temp->getTs().count() * 1000000;
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << "\", ";
 				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
 				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", "<<endl;
 
@@ -420,7 +415,7 @@ void Trace::trace_flush()
 				//cat is not necessary because the trace funtion does not include it
 				//new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
 				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
-				new_file << "\"ts\": " << temp->getTs().count() * 1000000;
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << "\", ";
 				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
 				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", ";
 
@@ -442,8 +437,8 @@ void Trace::trace_flush()
 				//new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
 				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
 				///////////////////////DOUBLE CHECK ID/////////////////////////////
-				new_file << "\"id\": " << "\"" << temp->getId()<< "\", ";
-				new_file << "\"ts\": " << temp->getTs().count() * 1000000;
+				new_file << "\"id\": " << "\"" << temp->getObjPtr()<< "\", ";
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << "\", ";
 				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
 
 				//don't need argument
@@ -462,9 +457,8 @@ void Trace::trace_flush()
 				//not necessary to print a category
 				//new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
 				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
-				new_file << "\"ts\": " << temp->getTs().count() * 1000000;
-				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
-				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", " <<endl;
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000<< "\", ";
+				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", " <<endl;
 				//missing args
 			}
 	
