@@ -22,6 +22,8 @@ int main()
 	test_trace->trace_instant_global("OutOfMemory_Testing");//check instant global event
 	test_trace->trace_end();
 	
+
+
 	//void ptr-www.learncpp.com/cpp-tutorial/613-void-pointers/
 	//test code
 
@@ -32,8 +34,10 @@ int main()
 	test testptr;
 	void* ptr;
 	ptr = &testptr;
-	
 
+	cout << ptr <<endl;*/
+	
+	/*
 	test_trace->trace_object_new("new", ptr); //N
 	test_trace->trace_object_gone("gone",ptr );//D
 	
