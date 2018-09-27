@@ -451,10 +451,10 @@ void Trace::trace_flush()
 		//-------------Base on Current Finding----------------//
 			if (temp->getPh() == "B")
 			{
-				new_file << "{ \"Name\": " << "\"" << temp->getName() << "\", ";
+				new_file << "{ \"name\": " << "\"" << temp->getName() << "\", ";
 				new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
 				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
-				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << "\", ";
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << ", ";
 				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
 				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", ";
 
@@ -464,33 +464,63 @@ void Trace::trace_flush()
 					arguements* tempArg = temp->getArgsCur();
 					new_file << "\"args\": " << "{";
 
-					while (tempArg->next != NULL)
+					while (tempArg != NULL)
 					{
 						new_file << "\""<< tempArg->args << "\": ";
-						new_file << "\""<< tempArg->val << "\", ";
+						new_file << "\""<< tempArg->val << "\" ";
 						tempArg = tempArg->next;
 					}
 
-					new_file << "}," << endl;
+					if (temp->getEventNext() == NULL)
+					{
+						new_file << "}}" << endl;
+					}
+					else
+					{
+						new_file << "}}," << endl;
+					}
+					
 				}
 			}
 			else if (temp->getPh() == "E")
 			{
 				//don't need to print name and category
 				new_file << "{ \"ph\": " << "\"" << temp->getPh() << "\", ";
-				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << "\", ";
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << ", ";
 				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
-				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", "<<endl;
+				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", ";
 
 				//missig args
+				if (temp->getArgsCur() != NULL)
+				{
+					arguements* tempArg = temp->getArgsCur();
+					new_file << "\"args\": " << "{";
+
+					while (tempArg != NULL)
+					{
+						new_file << "\"" << tempArg->args << "\": ";
+						new_file << "\"" << tempArg->val << "\" ";
+						tempArg = tempArg->next;
+					}
+
+					if (temp->getEventNext() == NULL)
+					{
+						new_file << "}}" << endl;
+					}
+					else
+					{
+						new_file << "}}," << endl;
+					}
+
+				}
 			}
 			else if (temp->getPh() == "i")
 			{
-				new_file << "{ \"Name\": " << "\"" << temp->getName() << "\", ";
+				new_file << "{ \"name\": " << "\"" << temp->getName() << "\", ";
 				//cat is not necessary because the trace funtion does not include it
 				//new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
 				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
-				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << "\", ";
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << ", ";
 				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
 				new_file << "\"tid\": " << "\"" << temp->getTid() << "\", ";
 
@@ -507,13 +537,13 @@ void Trace::trace_flush()
 			}
 			else if (temp->getPh() == "N" || temp->getPh() == "D")
 			{
-				new_file << "{ \"Name\": " << "\"" << temp->getName() << "\", ";
+				new_file << "{ \"name\": " << "\"" << temp->getName() << "\", ";
 				//not necessary to print a category
 				//new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
 				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
 				///////////////////////DOUBLE CHECK ID/////////////////////////////
 				new_file << "\"id\": " << "\"" <<"0x"<< temp->getObjPtr()<< "\", ";
-				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << "\", ";
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000 << ", ";
 				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
 
 				//don't need argument
@@ -528,13 +558,36 @@ void Trace::trace_flush()
 			}
 			else //else if ph is C
 			{
-				new_file << "{ \"Name\": " << "\"" << temp->getName() << "\", ";
+				new_file << "{ \"name\": " << "\"" << temp->getName() << "\", ";
 				//not necessary to print a category
 				//new_file << "\"cat\": " << "\"" << temp->getCat() << "\", ";
 				new_file << "\"ph\": " << "\"" << temp->getPh() << "\", ";
-				new_file << "\"ts\": " << temp->getTs().count() * 1000000<< "\", ";
-				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", " <<endl;
+				new_file << "\"ts\": " << temp->getTs().count() * 1000000<< ", ";
+				new_file << "\"pid\": " << "\"" << temp->getPid() << "\", ";
 				//missing args
+
+				if (temp->getArgsCur() != NULL)
+				{
+					arguements* tempArg = temp->getArgsCur();
+					new_file << "\"args\": " << "{";
+
+					while (tempArg != NULL)
+					{
+						new_file << "\"" << tempArg->args << "\": ";
+						new_file << "\"" << tempArg->val << "\" ";
+						tempArg = tempArg->next;
+					}
+
+					if (temp->getEventNext() == NULL)
+					{
+						new_file << "}}" << endl;
+					}
+					else
+					{
+						new_file << "}}," << endl;
+					}
+
+				}
 			}
 	
 
